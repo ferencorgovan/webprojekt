@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -36,5 +37,13 @@ public class MovieServiceImpl implements MovieService {
             result.add(movieDTO);
         }
         return result;
+    }
+
+    @Override
+    public Optional<MovieDTO> findById(Long id) {
+        Optional<MovieEntity> movieEntityOptional = movieRepository.findById(id);
+
+        Optional<MovieDTO> movieDTO = movieEntityOptional.map(movieEntity -> modelMapper.map(movieEntity, MovieDTO.class));
+        return movieDTO;
     }
 }
