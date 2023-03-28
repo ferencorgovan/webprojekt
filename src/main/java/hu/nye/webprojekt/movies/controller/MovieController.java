@@ -1,10 +1,15 @@
 package hu.nye.webprojekt.movies.controller;
 
 import hu.nye.webprojekt.movies.dto.MovieDTO;
+import hu.nye.webprojekt.movies.exception.MovieValidationException;
 import hu.nye.webprojekt.movies.service.MovieService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +52,17 @@ public class MovieController {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.PUT)
-    public ResponseEntity<MovieDTO> update(@RequestBody MovieDTO movieDTO) {
+    public ResponseEntity<MovieDTO> update(@Valid @RequestBody MovieDTO movieDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            List<String> errorList = new ArrayList<>();
+            for (FieldError fieldError : fieldErrors) {
+                errorList.add(fieldError.getDefaultMessage());
+            }
+
+            throw new MovieValidationException(errorList);
+        }
+
         MovieDTO updatedMovie = movieService.update(movieDTO);
 
         return ResponseEntity.status(200).body(updatedMovie);
