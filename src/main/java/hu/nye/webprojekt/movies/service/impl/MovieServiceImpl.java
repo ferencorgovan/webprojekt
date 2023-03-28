@@ -46,4 +46,13 @@ public class MovieServiceImpl implements MovieService {
         Optional<MovieDTO> movieDTO = movieEntityOptional.map(movieEntity -> modelMapper.map(movieEntity, MovieDTO.class));
         return movieDTO;
     }
+
+    @Override
+    public MovieDTO save(MovieDTO movieDTO) {
+        MovieEntity movieEntity = modelMapper.map(movieDTO, MovieEntity.class);
+        movieEntity.setId(null);
+        MovieEntity savedMovie = movieRepository.save(movieEntity);
+
+        return modelMapper.map(savedMovie, MovieDTO.class);
+    }
 }

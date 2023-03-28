@@ -10,4 +10,6 @@ public interface MovieService {
     List<MovieDTO> findAll();
 
     Optional<MovieDTO> findById(Long id);
+
+    MovieDTO save(MovieDTO movieDTO);
 }

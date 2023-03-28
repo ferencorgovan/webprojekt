@@ -3,10 +3,7 @@ package hu.nye.webprojekt.movies.controller;
 import hu.nye.webprojekt.movies.dto.MovieDTO;
 import hu.nye.webprojekt.movies.service.MovieService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,5 +37,12 @@ public class MovieController {
             // response = ResponseEntity.status(404).build();
         }
         return response;
+    }
+
+    @RequestMapping(path = "/", method = RequestMethod.POST)
+    public ResponseEntity<MovieDTO> save(@RequestBody MovieDTO movieDTO) {
+        MovieDTO savedMovie = movieService.save(movieDTO);
+
+        return ResponseEntity.status(201).body(savedMovie);
     }
 }
