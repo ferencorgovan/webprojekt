@@ -10,8 +10,18 @@ import java.util.List;
 @RestController
 public class MovieController {
 
+    private final MovieRepository movieRepository;
+
+    public MovieController(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
+    }
+
     @RequestMapping(path = "/movies", method = RequestMethod.GET)
     public List<String> findAll() {
+        MovieEntity movieEntity = new MovieEntity();
+        movieEntity.setTitle("Star Wars");
+        movieRepository.save(movieEntity);
+
         return Arrays.asList("Star Wars", "Terminator");
     }
 }
