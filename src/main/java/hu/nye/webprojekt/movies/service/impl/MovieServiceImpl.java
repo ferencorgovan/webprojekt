@@ -58,6 +58,21 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public MovieDTO update(MovieDTO movieDTO) {
+
+        Long id = movieDTO.getId();
+
+        boolean existsById = movieRepository.existsById(id);
+        if (existsById) {
+            MovieEntity movieToSave = modelMapper.map(movieDTO, MovieEntity.class);
+            MovieEntity savedMovie = movieRepository.save(movieToSave);
+            return modelMapper.map(savedMovie, MovieDTO.class);
+        } else {
+            throw new MovieNotFoundException("Movie not found with id " + id);
+        }
+    }
+
+    @Override
     public void delete(Long id) {
         Optional<MovieEntity> optionalMovie = movieRepository.findById(id);
 

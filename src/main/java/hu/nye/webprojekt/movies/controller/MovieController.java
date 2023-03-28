@@ -46,6 +46,14 @@ public class MovieController {
         return ResponseEntity.status(201).body(savedMovie);
     }
 
+    @RequestMapping(path = "/", method = RequestMethod.PUT)
+    public ResponseEntity<MovieDTO> update(@RequestBody MovieDTO movieDTO) {
+        MovieDTO updatedMovie = movieService.update(movieDTO);
+
+        return ResponseEntity.status(200).body(updatedMovie);
+    }
+
+
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         movieService.delete(id);
