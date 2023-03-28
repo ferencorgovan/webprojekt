@@ -12,4 +12,6 @@ public interface MovieService {
     Optional<MovieDTO> findById(Long id);
 
     MovieDTO save(MovieDTO movieDTO);
+
+    void delete(Long id);
 }
