@@ -1,4 +1,4 @@
-package hu.nye.webprojekt.movies;
+package hu.nye.webprojekt.movies.entity;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
